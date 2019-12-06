@@ -1,7 +1,16 @@
 {
   "name": "my-react-app-with-docker",
   "version": "0.1.0",
+  "description": "react app and nodejs and bootstrap",
+  "main": "app.js",
   "private": true,
+  "proxy": "http://localhost:3001",
+  "keywords": [
+    "nodejs",
+    "bootstrap",
+    "express",
+    "reactjs"
+  ],
   "dependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -11,7 +20,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:server": "node-env-run server --exec nodemon | pino-colada",
+    "start:dev": "run-p start:server start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,5 +38,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
+    "node-env-run": "^3.0.2",
+    "nodemon": "^2.0.1",
+    "npm-run-all": "^4.1.5",
+    "pino-colada": "^1.5.0"
   }
 }

@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  webserver:
+    container_name: my_nodejs_app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:4000"
+    restart: always
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/usr/app
+      - ./node_modules:/usr/app/node_modules
+    depends_on:
+      - database
+      environment: 
+        DATABASE_URL: 
+
+  database:
+    image: postgres:latest
+    container_name: my_nodejs_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
