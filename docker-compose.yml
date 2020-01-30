@@ -1,29 +1,29 @@
 version: '3'
-services: 
+services:
   postgres:
     image: 'postgres'
     restart: always
     container_name: 'my_postgres_database'
-    environment: 
+    environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=my-db
     ports:
       - '5432:5432'
-    volumes: 
+    volumes:
       - db_data:/var/lib/postgresql/data
-  
+
   pgadmin:
     image: 'dpage/pgadmin4'
     container_name: 'my_pg_admin'
     restart: always
-    depends_on: 
+    depends_on:
       - postgres
-    environment: 
+    environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.com
       PGADMIN_DEFAULT_PASSWORD: password
-    ports: 
+    ports:
       - '5050:80'
 
-volumes: 
+volumes:
   db_data:

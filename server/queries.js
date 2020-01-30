@@ -7,6 +7,7 @@ const pool = new Pool({
     port: 5432,
 })
 
+// GET ALL
 const getUsers = (req, res) => {
     pool.query(
         'SELECT * FROM users ORDER BY user_id ASC',
@@ -15,34 +16,39 @@ const getUsers = (req, res) => {
                 throw error
             }
 
-            res.status(200).json(results.rows)
+            return res.status(200).json({
+                data: results.rows
+            })
         }
     )
 }
 
 // GET
 const getUserById = (req, res) => {
-    const id = parseInt(req.params.id)
+    const { user_id } = req.query
+    console.log(user_id)
 
     pool.query(
-        `SELECT * FROM users WHERE user_id = ${id}`,
+        `SELECT * FROM users WHERE user_id = ${user_id}`,
         (error, results) => {
             if (error) {
                 throw error
             }
-            res.status(200).json(results.rows)
+            return res.status(200).json({
+                data: results.rows
+            })
         }
     )
 }
 
 // POST
 const createUser = (req, res) => {
-    const { username, last_name, first_name, email } = req.body
+    const { username, email } = req.query
 
     pool.query(
         `INSERT INTO users \
-        ( user_id, username, last_name, first_name, email, created_on ) \
-        VALUES ( ${username}, ${last_name}, ${first_name}, ${email} )`,
+        ( username, email ) \
+        VALUES ( ${username}, ${email} )`,
         (error, results) => {
             if (error) {
                 throw error
@@ -55,10 +61,10 @@ const createUser = (req, res) => {
 // PUT
 const updateUser = (req, res) => {
     const user_id = parseInt(req.params.user_id)
-    const { first_name } = req.body
+    const { email } = req.body
 
     pool.query(
-        `UPDATE users SET first_name = ${first_name}`,
+        `UPDATE users SET email = ${email}`,
         (error, results) => {
             if (error) {
                 throw error
